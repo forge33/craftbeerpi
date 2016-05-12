@@ -64,6 +64,7 @@ class Hardware(db.Model):
     name = db.Column(db.String(80))
     type = db.Column(db.String(80))
     switch = db.Column(db.String(80))
+    invert = db.Column(db.String(3))
 
 class Config(db.Model):
     name = db.Column(db.String(50), primary_key=True)

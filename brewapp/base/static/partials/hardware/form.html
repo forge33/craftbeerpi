@@ -21,6 +21,13 @@
       <option ng-repeat="t in type" value="{{t.key}}">{{t.value}}</option>
     </select>
   </div>
+  <div class="form-group">
+    <label>Invert</label>
+    <select class="form-control" ng-model="hardware.invert">
+      <option value="">---Please select---</option>
+      <option ng-repeat="t in invert" value="{{t.key}}">{{t.value}}</option>
+    </select>
+  </div>
 </div>
 <div class="modal-footer">
   <a class="btn btn-danger" href="" ng-click="cancel()"><i class="fa fa-times-circle"></i> Close</a>

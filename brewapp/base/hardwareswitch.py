@@ -5,6 +5,7 @@ from brewapp import app, socketio
 from views import base
 from brewapp import manager
 
+
 @app.route('/api/hardware/state', methods=['GET'])
 def pumpstate():
     return  json.dumps(app.brewapp_pump_state)
@@ -37,7 +38,10 @@ def initHardware(cleanup = True):
     hw = Hardware.query.all()
     for h in hw:
         if(h.switch != None):
-            app.brewapp_switch_state[h.switch] = False
+            if(h.invert == 'No'):
+                app.brewapp_switch_state[h.switch] = False
+            else:
+                app.brewapp_switch_state[h.switch] = True
 
     kettles = Kettle.query.all()
     for v in kettles:
@@ -54,14 +58,26 @@ def switchstate():
 @socketio.on('switch', namespace='/brew')
 def ws_switch(data):
     s = data["switch"]
-    if(app.brewapp_switch_state[s] == True):
-        app.logger.info("Switch off: " + str(s))
-        app.brewapp_hardware.switchOFF(s);
-        app.brewapp_switch_state[s] = False
+    i = data["invert"]
+
+    if(i == 'N'):
+        if(app.brewapp_switch_state[s] == True):
+            app.logger.info("Switch off: " + str(s))
+            app.brewapp_hardware.switchOFF(s);
+            app.brewapp_switch_state[s] = False
+        else:
+            app.logger.info("Switch on: " + str(s))
+            app.brewapp_hardware.switchON(s);
+            app.brewapp_switch_state[s]  = True
     else:
-        app.logger.info("Switch on: " + str(s))
-        app.brewapp_hardware.switchON(s);
-        app.brewapp_switch_state[s]  = True
+        if(app.brewapp_switch_state[s] == True):
+            app.logger.info("Switch on: " + str(s))
+            app.brewapp_hardware.switchON(s);
+            app.brewapp_switch_state[s] = False
+        else:
+            app.logger.info("Switch off: " + str(s))
+            app.brewapp_hardware.switchOFF(s);
+            app.brewapp_switch_state[s]  = True
 
     socketio.emit('switch_state_update', app.brewapp_switch_state, namespace ='/brew')
 

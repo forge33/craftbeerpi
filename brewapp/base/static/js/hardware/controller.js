@@ -7,6 +7,10 @@ angular.module('craftbeerpi.hardware', []).controller('PumpOverviewController', 
     {"key":"H", "value": "Heater"},
     {"key":"O", "value": "Other"},
   ];
+  $scope.invert = [
+    {"key":"N", "value": "No"},
+    {"key":"Y", "value": "Yes"}
+  ];
 
   // Get GPIOs
   $scope.gpio = []

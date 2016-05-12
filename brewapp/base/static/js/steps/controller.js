@@ -47,7 +47,7 @@ angular.module('craftberpi.controllers', []).controller('StepOverviewController'
     "value": "Automatic"
   }, {
     "key": "M",
-    "value": "Manuell"
+    "value": "Manual"
   }]
 
   $scope.clearAllSteps = function() {

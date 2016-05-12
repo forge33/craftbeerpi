@@ -5,7 +5,7 @@
   </div>
   <div class="panel-body">
     <div class="btn-group-vertical" role="group">
-      <button class="btn btn-default" ng-class="buttonState(p.switch)" ng-click="switchGPIO(p.switch)" ng-repeat="p in hardware">
+      <button class="btn btn-default" ng-class="buttonState(p.switch,p.invert)" ng-click="switchGPIO(p.switch,p.invert)" ng-repeat="p in hardware">
         <span class="badge"><i class="fa" ng-class="hardwareType(p.type)"></i></span> {{p.name}}
       </button>
     </div>

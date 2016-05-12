@@ -69,17 +69,25 @@ angular.module('craftberpi.controllers2', []).controller('DashBoardController', 
     }
   }
 
-  $scope.buttonState = function(s) {
+  $scope.buttonState = function(s,i) {
     var state = false;
 
     if ($scope.switch_state[s] == undefined) {
       return "btn-default"
     }
 
-    if ($scope.switch_state[s] == true) {
-      return "btn-success"
+    if (i == 'Y') {
+      if ($scope.switch_state[s] == false) {
+        return "btn-success"
+      } else {
+        return "btn-default"
+      }
     } else {
-      return "btn-default"
+      if ($scope.switch_state[s] == true) {
+        return "btn-success"
+      } else {
+        return "btn-default"
+      }
     }
   }
 
@@ -219,10 +227,11 @@ angular.module('craftberpi.controllers2', []).controller('DashBoardController', 
     });
   }
 
-  $scope.switchGPIO = function(item) {
+  $scope.switchGPIO = function(item,invert) {
 
     ws.emit("switch", {
-      "switch": item
+      "switch": item,
+      "invert": invert
     });
   }
 
